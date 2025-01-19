@@ -101,6 +101,7 @@
             const donationData = { amount };
             if (window.Telegram.WebApp) {
                 Telegram.WebApp.sendData(JSON.stringify(donationData));
+                Telegram.WebApp.close();
             } else {
                 alert(`Ви обрали донат на суму ${amount}₴`);
             }
