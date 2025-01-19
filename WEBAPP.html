@@ -9,47 +9,46 @@
         // Ініціалізація WebApp
         Telegram.WebApp.ready();
 
-        let donationAmount = 0; // Змінна для зберігання суми донату
+        function sendDonationToBot(amount) {
+            const donationData = { amount: amount };  // Створюємо об'єкт з даними
 
-        // Функція для обробки натискання на кнопку донату
-        function setDonationAmount(amount) {
-            donationAmount = amount; // Присвоюємо значення суми донату
-            console.log(`Вибрана сума донату: ${donationAmount}₴`); // Для перевірки у консолі
-        }
+            // Відправляємо дані до бота через WebApp
+            Telegram.WebApp.sendData(JSON.stringify(donationData));
 
-        // Функція для закриття WebApp
-        function closeWebApp() {
-            Telegram.WebApp.close(); // Закриває вікно WebApp
+            // Закриваємо WebApp після відправки
+            Telegram.WebApp.close();
         }
 
         // Додаємо слухачі на кнопки
         window.onload = function () {
             document.getElementById('donate5').addEventListener('click', function () {
-                setDonationAmount(5); // Вибір 5 гривень
+                sendDonationToBot(5); // Вибір 5 гривень
             });
 
             document.getElementById('donate10').addEventListener('click', function () {
-                setDonationAmount(10); // Вибір 10 гривень
+                sendDonationToBot(10); // Вибір 10 гривень
             });
 
             document.getElementById('donate25').addEventListener('click', function () {
-                setDonationAmount(25); // Вибір 25 гривень
+                sendDonationToBot(25); // Вибір 25 гривень
             });
 
             document.getElementById('donate50').addEventListener('click', function () {
-                setDonationAmount(50); // Вибір 50 гривень
+                sendDonationToBot(50); // Вибір 50 гривень
             });
 
             document.getElementById('donate75').addEventListener('click', function () {
-                setDonationAmount(75); // Вибір 75 гривень
+                sendDonationToBot(75); // Вибір 75 гривень
             });
 
             document.getElementById('donate100').addEventListener('click', function () {
-                setDonationAmount(100); // Вибір 100 гривень
+                sendDonationToBot(100); // Вибір 100 гривень
             });
 
-            // Слухач для кнопки закриття
-            document.getElementById('closeButton').addEventListener('click', closeWebApp);
+            // Слухач для кнопки закриття (на всяк випадок)
+            document.getElementById('closeButton').addEventListener('click', function () {
+                Telegram.WebApp.close(); // Закриває вікно WebApp
+            });
         }
     </script>
     <style>
