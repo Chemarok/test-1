@@ -9,10 +9,14 @@
         // Ініціалізація WebApp
         Telegram.WebApp.ready();
 
-        function sendData(amount) {
-            // Відправка даних до бота
-            const data = { amount: amount };
-            Telegram.WebApp.sendData(JSON.stringify(data));
+        function sendDonation(amount) {
+            const donationData = { amount };
+            if (window.Telegram.WebApp) {
+                Telegram.WebApp.sendData(JSON.stringify(donationData));
+                Telegram.WebApp.close();
+            } else {
+                alert(Ви обрали донат на суму ${amount}₴);
+            }
         }
 
         window.onload = function () {
