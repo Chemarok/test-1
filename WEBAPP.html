@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donation WebApp</title>
+    <title>ВебЗастосунок Донатів</title>
     <style>
         :root {
-            --telegram-blue: #0088cc;
-            --telegram-light-blue: #33b5e5;
-            --telegram-dark-blue: #005f99;
-            --background-color: #f5f8fa;
-            --text-color: #333;
-            --button-hover: #004c7f;
+            --telegram-dark: #2a2f38;
+            --telegram-light-dark: #3b4350;
+            --telegram-darker: #21262d;
+            --background-color: #2a2f38;
+            --text-color: #eaeaea;
+            --button-hover: #3b4350;
         }
 
         body {
@@ -19,31 +19,34 @@
             margin: 0;
             padding: 0;
             background-color: var(--background-color);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            color: var(--text-color);
+            min-height: 100vh;
+            box-sizing: border-box;
         }
 
         .container {
             text-align: center;
             padding: 20px;
-            background: white;
+            background: var(--telegram-darker);
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
         }
 
         h1 {
-            color: var(--telegram-blue);
+            color: var(--text-color);
         }
 
         .button {
             display: inline-block;
             margin: 10px;
             padding: 15px 25px;
-            background-color: var(--telegram-blue);
-            color: white;
+            background-color: var(--telegram-dark);
+            color: var(--text-color);
             font-size: 16px;
             border: none;
             border-radius: 5px;
@@ -52,11 +55,11 @@
         }
 
         .button:hover {
-            background-color: var(--telegram-light-blue);
+            background-color: var(--telegram-light-dark);
         }
 
         .button:active {
-            background-color: var(--telegram-dark-blue);
+            background-color: var(--telegram-darker);
         }
 
         .button-container {
@@ -81,8 +84,8 @@
 </head>
 <body>
     <div class="container">
-        <h1>Support Me ❤️</h1>
-        <p>Select an amount to donate:</p>
+        <h1>Підтримайте мене ❤️</h1>
+        <p>Оберіть суму для донату:</p>
         <div class="button-container">
             <button class="button" onclick="sendDonation(5)">5₴</button>
             <button class="button" onclick="sendDonation(10)">10₴</button>
@@ -99,7 +102,7 @@
             if (window.Telegram.WebApp) {
                 Telegram.WebApp.sendData(JSON.stringify(donationData));
             } else {
-                alert(`You selected to donate ${amount}₴`);
+                alert(`Ви обрали донат на суму ${amount}₴`);
             }
         }
     </script>
