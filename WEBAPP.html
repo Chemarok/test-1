@@ -3,109 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ВебЗастосунок Донатів</title>
-    <style>
-        :root {
-            --telegram-dark: #2a2f38;
-            --telegram-light-dark: #3b4350;
-            --telegram-darker: #21262d;
-            --background-color: #2a2f38;
-            --text-color: #eaeaea;
-            --button-hover: #3b4350;
+    <title>WebApp для Telegram</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        // Ініціалізація WebApp
+        Telegram.WebApp.ready();
+
+        function sendData(amount) {
+            // Відправка даних до бота
+            const data = { amount: amount };
+            Telegram.WebApp.sendData(JSON.stringify(data));
         }
 
+        window.onload = function () {
+            // Додаємо слухачі на кнопки для всіх варіантів
+            document.getElementById('donate5').addEventListener('click', function () {
+                sendData(5); // Відправляємо 5 гривень
+            });
+
+            document.getElementById('donate10').addEventListener('click', function () {
+                sendData(10); // Відправляємо 10 гривень
+            });
+
+            document.getElementById('donate25').addEventListener('click', function () {
+                sendData(25); // Відправляємо 25 гривень
+            });
+
+            document.getElementById('donate50').addEventListener('click', function () {
+                sendData(50); // Відправляємо 50 гривень
+            });
+
+            document.getElementById('donate75').addEventListener('click', function () {
+                sendData(75); // Відправляємо 75 гривень
+            });
+
+            document.getElementById('donate100').addEventListener('click', function () {
+                sendData(100); // Відправляємо 100 гривень
+            });
+        };
+    </script>
+    <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #1e1e1e; /* Темний фон */
+            color: #ffffff; /* Білий текст */
             margin: 0;
             padding: 0;
-            background-color: var(--background-color);
-            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        .container {
-            text-align: center;
-            padding: 20px;
-            background: var(--telegram-darker);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 400px;
+            height: 100vh;
+            flex-direction: column;
         }
 
         h1 {
-            color: var(--text-color);
+            font-size: 2.5em;
+            margin-bottom: 20px;
         }
 
-        .button {
-            display: inline-block;
-            margin: 10px;
-            padding: 15px 25px;
-            background-color: var(--telegram-dark);
-            color: var(--text-color);
-            font-size: 16px;
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #2a2a2d; /* Темний фон кнопок */
+            color: #ffffff;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: var(--telegram-light-dark);
-        }
-
-        .button:active {
-            background-color: var(--telegram-darker);
-        }
-
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .button-container .button {
-            flex: 1 1 calc(33.333% - 20px);
-            max-width: 150px;
+            padding: 15px 30px;
             margin: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            width: 200px;
         }
 
-        @media (max-width: 600px) {
-            .button-container .button {
-                flex: 1 1 calc(50% - 20px);
-                max-width: 100px;
-            }
+        button:hover {
+            background-color: #3a3a3d; /* Трохи світліший при наведенні */
+        }
+
+        .heart {
+            color: #ff4081; /* Рожеве сердечко */
+            font-size: 1.5em;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Підтримайте мене ❤️</h1>
-        <p>Оберіть суму для донату:</p>
-        <div class="button-container">
-            <button class="button" onclick="sendDonation(5)">5₴</button>
-            <button class="button" onclick="sendDonation(10)">10₴</button>
-            <button class="button" onclick="sendDonation(20)">20₴</button>
-            <button class="button" onclick="sendDonation(50)">50₴</button>
-            <button class="button" onclick="sendDonation(75)">75₴</button>
-            <button class="button" onclick="sendDonation(100)">100₴</button>
-        </div>
-    </div>
-
-    <script>
-        function sendDonation(amount) {
-            const donationData = { amount };
-            if (window.Telegram.WebApp) {
-                Telegram.WebApp.sendData(JSON.stringify(donationData));
-                Telegram.WebApp.close();
-            } else {
-                alert(`Ви обрали донат на суму ${amount}₴`);
-            }
-        }
-    </script>
+    <h1>Підтримати автора <span class="heart">❤️</span></h1>
+    <p>Виберіть суму для донату:</p>
+    <button id="donate5">5 ₴</button>
+    <button id="donate10">10 ₴</button>
+    <button id="donate25">25 ₴</button>
+    <button id="donate50">50 ₴</button>
+    <button id="donate75">75 ₴</button>
+    <button id="donate100">100 ₴</button>
 </body>
 </html>
