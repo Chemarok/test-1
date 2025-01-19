@@ -9,9 +9,15 @@
         // Ініціалізація WebApp
         Telegram.WebApp.ready();
 
-        order.addEventListener('click', () => {
-            Telegram.WebApp.close();
-        })
+        function closeWebApp() {
+            Telegram.WebApp.close(); // Закриває вікно WebApp
+        }
+
+        // Додаємо слухача події для кнопки після завантаження
+        window.onload = function () {
+            // Знаходимо кнопку за ID і додаємо подію
+            document.getElementById('donate5').addEventListener('click', closeWebApp);
+        }
     </script>
     <style>
         body {
