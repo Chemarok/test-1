@@ -12,38 +12,37 @@
         function sendDonation(amount) {
             const donationData = { amount };
             if (window.Telegram.WebApp) {
-                tg.sendData(JSON.stringify(donationData));
-                tg.close();
+                tg.sendData(JSON.stringify(donationData)); // Відправляємо дані
+                tg.close(); // Закриваємо вікно після натискання кнопки
             } else {
-                alert(Ви обрали донат на суму ${amount}₴);
+                alert(`Ви обрали донат на суму ${amount}₴`);
             }
         }
 
         window.onload = function () {
             // Додаємо слухачі на кнопки для всіх варіантів
             document.getElementById('donate5').addEventListener('click', function () {
-                sendData(5);
-                tg.close() // Відправляємо 5 гривень
+                sendDonation(5); // Відправляємо 5 гривень
             });
 
             document.getElementById('donate10').addEventListener('click', function () {
-                sendData(10); // Відправляємо 10 гривень
+                sendDonation(10); // Відправляємо 10 гривень
             });
 
             document.getElementById('donate25').addEventListener('click', function () {
-                sendData(25); // Відправляємо 25 гривень
+                sendDonation(25); // Відправляємо 25 гривень
             });
 
             document.getElementById('donate50').addEventListener('click', function () {
-                sendData(50); // Відправляємо 50 гривень
+                sendDonation(50); // Відправляємо 50 гривень
             });
 
             document.getElementById('donate75').addEventListener('click', function () {
-                sendData(75); // Відправляємо 75 гривень
+                sendDonation(75); // Відправляємо 75 гривень
             });
 
             document.getElementById('donate100').addEventListener('click', function () {
-                sendData(100); // Відправляємо 100 гривень
+                sendDonation(100); // Відправляємо 100 гривень
             });
         };
     </script>
