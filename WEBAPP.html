@@ -9,14 +9,47 @@
         // Ініціалізація WebApp
         Telegram.WebApp.ready();
 
+        let donationAmount = 0; // Змінна для зберігання суми донату
+
+        // Функція для обробки натискання на кнопку донату
+        function setDonationAmount(amount) {
+            donationAmount = amount; // Присвоюємо значення суми донату
+            console.log(`Вибрана сума донату: ${donationAmount}₴`); // Для перевірки у консолі
+        }
+
+        // Функція для закриття WebApp
         function closeWebApp() {
             Telegram.WebApp.close(); // Закриває вікно WebApp
         }
 
-        // Додаємо слухача події для кнопки після завантаження
+        // Додаємо слухачі на кнопки
         window.onload = function () {
-            // Знаходимо кнопку за ID і додаємо подію
-            document.getElementById('donate5').addEventListener('click', closeWebApp);
+            document.getElementById('donate5').addEventListener('click', function () {
+                setDonationAmount(5); // Вибір 5 гривень
+            });
+
+            document.getElementById('donate10').addEventListener('click', function () {
+                setDonationAmount(10); // Вибір 10 гривень
+            });
+
+            document.getElementById('donate25').addEventListener('click', function () {
+                setDonationAmount(25); // Вибір 25 гривень
+            });
+
+            document.getElementById('donate50').addEventListener('click', function () {
+                setDonationAmount(50); // Вибір 50 гривень
+            });
+
+            document.getElementById('donate75').addEventListener('click', function () {
+                setDonationAmount(75); // Вибір 75 гривень
+            });
+
+            document.getElementById('donate100').addEventListener('click', function () {
+                setDonationAmount(100); // Вибір 100 гривень
+            });
+
+            // Слухач для кнопки закриття
+            document.getElementById('closeButton').addEventListener('click', closeWebApp);
         }
     </script>
     <style>
@@ -75,5 +108,8 @@
     <button id="donate50">50 ₴</button>
     <button id="donate75">75 ₴</button>
     <button id="donate100">100 ₴</button>
+    <h2>Зараз вибрана сума: <span id="selectedAmount">0 ₴</span></h2>
+
+    <button id="closeButton">Закрити WebApp</button>
 </body>
 </html>
