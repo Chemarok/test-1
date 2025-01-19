@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation WebApp</title>
+    <style>
+        :root {
+            --telegram-blue: #0088cc;
+            --telegram-light-blue: #33b5e5;
+            --telegram-dark-blue: #005f99;
+            --background-color: #f5f8fa;
+            --text-color: #333;
+            --button-hover: #004c7f;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: var(--text-color);
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--telegram-blue);
+        }
+
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 25px;
+            background-color: var(--telegram-blue);
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: var(--telegram-light-blue);
+        }
+
+        .button:active {
+            background-color: var(--telegram-dark-blue);
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .button-container .button {
+            flex: 1 1 calc(33.333% - 20px);
+            max-width: 150px;
+            margin: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .button-container .button {
+                flex: 1 1 calc(50% - 20px);
+                max-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Support Me ❤️</h1>
+        <p>Select an amount to donate:</p>
+        <div class="button-container">
+            <button class="button" onclick="sendDonation(5)">5₴</button>
+            <button class="button" onclick="sendDonation(10)">10₴</button>
+            <button class="button" onclick="sendDonation(20)">20₴</button>
+            <button class="button" onclick="sendDonation(50)">50₴</button>
+            <button class="button" onclick="sendDonation(75)">75₴</button>
+            <button class="button" onclick="sendDonation(100)">100₴</button>
+        </div>
+    </div>
+
+    <script>
+        function sendDonation(amount) {
+            const donationData = { amount };
+            if (window.Telegram.WebApp) {
+                Telegram.WebApp.sendData(JSON.stringify(donationData));
+            } else {
+                alert(`You selected to donate ${amount}₴`);
+            }
+        }
+    </script>
+</body>
+</html>
