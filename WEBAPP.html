@@ -9,42 +9,9 @@
         // Ініціалізація WebApp
         tg.ready();
 
-        function sendDonation(amount) {
-            const donationData = { amount };
-            if (window.Telegram.WebApp) {
-                tg.sendData(JSON.stringify(donationData)); // Відправляємо дані
-                tg.close(); // Закриваємо вікно після натискання кнопки
-            } else {
-                alert(`Ви обрали донат на суму ${amount}₴`);
-            }
-        }
-
-        window.onload = function () {
-            // Додаємо слухачі на кнопки для всіх варіантів
-            document.getElementById('donate5').addEventListener('click', function () {
-                sendDonation(5); // Відправляємо 5 гривень
-            });
-
-            document.getElementById('donate10').addEventListener('click', function () {
-                sendDonation(10); // Відправляємо 10 гривень
-            });
-
-            document.getElementById('donate25').addEventListener('click', function () {
-                sendDonation(25); // Відправляємо 25 гривень
-            });
-
-            document.getElementById('donate50').addEventListener('click', function () {
-                sendDonation(50); // Відправляємо 50 гривень
-            });
-
-            document.getElementById('donate75').addEventListener('click', function () {
-                sendDonation(75); // Відправляємо 75 гривень
-            });
-
-            document.getElementById('donate100').addEventListener('click', function () {
-                sendDonation(100); // Відправляємо 100 гривень
-            });
-        };
+        order.addEventListener('click', () => {
+            tg.close();
+        })
     </script>
     <style>
         body {
