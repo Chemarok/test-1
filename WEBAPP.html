@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height" >
     <title>WebApp для Telegram</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
@@ -45,10 +45,6 @@
                 sendDonationToBot(100); // Вибір 100 гривень
             });
 
-            // Слухач для кнопки закриття (на всяк випадок)
-            document.getElementById('closeButton').addEventListener('click', function () {
-                Telegram.WebApp.close(); // Закриває вікно WebApp
-            });
         }
     </script>
     <style>
@@ -107,8 +103,5 @@
     <button id="donate50">50 ₴</button>
     <button id="donate75">75 ₴</button>
     <button id="donate100">100 ₴</button>
-    <h2>Зараз вибрана сума: <span id="selectedAmount">0 ₴</span></h2>
-
-    <button id="closeButton">Закрити WebApp</button>
 </body>
 </html>
