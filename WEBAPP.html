@@ -45,6 +45,7 @@
             margin-bottom: 20px;
             width: 100%;
             aspect-ratio: 1;
+            transition: all 0.2s ease-in-out;
         }
 
         .cell {
@@ -55,7 +56,9 @@
             font-size: 2rem;
             color: white;
             border-radius: 5px;
-            transition: background-color 0.2s, transform 0.1s;
+            transition: background-color 0.2s, transform 0.2s;
+            width: 100%;
+            height: 100%;
         }
 
         button {
@@ -177,13 +180,14 @@
             }
         }
 
-        // Move and merge logic for all directions
+        // Combine and slide logic for rows
         function slideAndMergeRow(row) {
             const newRow = row.filter(num => num !== 0); // Remove zeros
             for (let i = 0; i < newRow.length - 1; i++) {
                 if (newRow[i] === newRow[i + 1]) {
                     newRow[i] *= 2;
                     newRow[i + 1] = 0;
+                    i++; // Skip next tile to prevent double merge
                 }
             }
             return newRow.filter(num => num !== 0).concat(new Array(4 - newRow.length).fill(0));
