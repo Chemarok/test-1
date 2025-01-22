@@ -1,109 +1,177 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height" >
-    <title>WebApp для Telegram</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        // Ініціалізація WebApp
-        Telegram.WebApp.ready();
-
-        function sendDonationToBot(amount) {
-            const donationData = { amount: amount };  // Створюємо об'єкт з даними
-
-            // Відправляємо дані до бота через WebApp
-            Telegram.WebApp.sendData(JSON.stringify(donationData));
-
-            // Закриваємо WebApp після відправки
-            Telegram.WebApp.close();
-        }
-
-        // Додаємо слухачі на кнопки
-        window.onload = function () {
-            document.getElementById('donate5').addEventListener('click', function () {
-                sendDonationToBot(5); // Вибір 5 гривень
-            });
-
-            document.getElementById('donate10').addEventListener('click', function () {
-                sendDonationToBot(10); // Вибір 10 гривень
-            });
-
-            document.getElementById('donate25').addEventListener('click', function () {
-                sendDonationToBot(25); // Вибір 25 гривень
-            });
-
-            document.getElementById('donate50').addEventListener('click', function () {
-                sendDonationToBot(50); // Вибір 50 гривень
-            });
-
-            document.getElementById('donate75').addEventListener('click', function () {
-                sendDonationToBot(75); // Вибір 75 гривень
-            });
-
-            document.getElementById('donate100').addEventListener('click', function () {
-                sendDonationToBot(100); // Вибір 100 гривень
-            });
-
-        }
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Game</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1e1e1e; /* Темний фон */
-            color: #ffffff; /* Білий текст */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-color: #faf8ef;
             flex-direction: column;
         }
 
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-align: center;
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        p {
-            font-size: 1.2em;
+        h1 {
+            font-size: 2.5rem;
             margin-bottom: 20px;
+        }
+
+        #grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(4, 100px);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ccc0b3;
+            font-size: 2rem;
+            color: white;
+            border-radius: 5px;
         }
 
         button {
-            background-color: #2a2a2d; /* Темний фон кнопок */
-            color: #ffffff;
-            border: none;
-            padding: 15px 30px;
-            margin: 10px;
-            font-size: 1.2em;
+            padding: 10px 20px;
+            font-size: 1rem;
             cursor: pointer;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-            width: 200px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
         }
 
-        button:hover {
-            background-color: #3a3a3d; /* Трохи світліший при наведенні */
-        }
-
-        .heart {
-            color: #ff4081; /* Рожеве сердечко */
-            font-size: 1.5em;
-            
+        button:active {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>Підтримати автора <span class="heart">❤️</span></h1>
-    <p>Виберіть суму для донату:</p>
-    <button id="donate5">5 ₴</button>
-    <button id="donate10">10 ₴</button>
-    <button id="donate25">25 ₴</button>
-    <button id="donate50">50 ₴</button>
-    <button id="donate75">75 ₴</button>
-    <button id="donate100">100 ₴</button>
+    <div id="game-container">
+        <h1>2048</h1>
+        <div id="grid-container"></div>
+        <button id="reset-button">Reset Game</button>
+    </div>
+
+    <script>
+        const gridContainer = document.getElementById('grid-container');
+        const resetButton = document.getElementById('reset-button');
+
+        let board = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+        ];
+
+        function initializeGame() {
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    board[row][col] = 0;
+                }
+            }
+            addRandomTile();
+            addRandomTile();
+            updateGrid();
+        }
+
+        function updateGrid() {
+            gridContainer.innerHTML = '';
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    const value = board[row][col];
+                    cell.textContent = value !== 0 ? value : '';
+                    if (value) {
+                        cell.style.backgroundColor = getTileColor(value);
+                    }
+                    gridContainer.appendChild(cell);
+                }
+            }
+        }
+
+        function addRandomTile() {
+            let emptyCells = [];
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    if (board[row][col] === 0) {
+                        emptyCells.push({ row, col });
+                    }
+                }
+            }
+
+            if (emptyCells.length > 0) {
+                const { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                board[row][col] = Math.random() < 0.9 ? 2 : 4;
+            }
+        }
+
+        function getTileColor(value) {
+            switch (value) {
+                case 2: return '#eee4da';
+                case 4: return '#ede0c8';
+                case 8: return '#f2b179';
+                case 16: return '#f59563';
+                case 32: return '#f67c5f';
+                case 64: return '#f65e3b';
+                case 128: return '#edcf72';
+                case 256: return '#edcc61';
+                case 512: return '#edc850';
+                case 1024: return '#edc53f';
+                case 2048: return '#edc22e';
+                default: return '#ccc0b3';
+            }
+        }
+
+        resetButton.addEventListener('click', initializeGame);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp') moveUp();
+            if (e.key === 'ArrowDown') moveDown();
+            if (e.key === 'ArrowLeft') moveLeft();
+            if (e.key === 'ArrowRight') moveRight();
+        });
+
+        function moveUp() {
+            // Implement moveUp logic
+        }
+
+        function moveDown() {
+            // Implement moveDown logic
+        }
+
+        function moveLeft() {
+            // Implement moveLeft logic
+        }
+
+        function moveRight() {
+            // Implement moveRight logic
+        }
+
+        initializeGame();
+    </script>
 </body>
 </html>
