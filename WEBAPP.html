@@ -97,6 +97,14 @@
             display: none;
             margin-top: 20px;
         }
+
+        #game-over-message {
+            font-size: 2rem;
+            color: #e74c3c;
+            font-weight: bold;
+            display: none;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -105,12 +113,14 @@
         <div id="grid-container"></div>
         <button id="reset-button">Reset Game</button>
         <div id="win-message">You Win!</div>
+        <div id="game-over-message">Game Over!</div>
     </div>
 
     <script>
         const gridContainer = document.getElementById('grid-container');
         const resetButton = document.getElementById('reset-button');
         const winMessage = document.getElementById('win-message');
+        const gameOverMessage = document.getElementById('game-over-message');
 
         let board = [
             [0, 0, 0, 0],
@@ -129,6 +139,7 @@
             addRandomTile();
             updateGrid();
             winMessage.style.display = 'none'; // Hide win message
+            gameOverMessage.style.display = 'none'; // Hide game over message
         }
 
         function updateGrid() {
@@ -206,6 +217,7 @@
             addRandomTile();
             updateGrid();
             checkWin();
+            checkGameOver();
         }
 
         function moveDown() {
@@ -218,6 +230,7 @@
             addRandomTile();
             updateGrid();
             checkWin();
+            checkGameOver();
         }
 
         function moveLeft() {
@@ -227,6 +240,7 @@
             addRandomTile();
             updateGrid();
             checkWin();
+            checkGameOver();
         }
 
         function moveRight() {
@@ -238,6 +252,7 @@
             addRandomTile();
             updateGrid();
             checkWin();
+            checkGameOver();
         }
 
         // Swipe detection
@@ -275,6 +290,30 @@
                         return;
                     }
                 }
+            }
+        }
+
+        function checkGameOver() {
+            let gameOver = true;
+            // Check if there is any empty space or if any tiles can be merged
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    if (board[row][col] === 0) {
+                        gameOver = false;
+                    } else {
+                        // Check if adjacent tiles are the same
+                        if (row < 3 && board[row][col] === board[row + 1][col]) {
+                            gameOver = false;
+                        }
+                        if (col < 3 && board[row][col] === board[row][col + 1]) {
+                            gameOver = false;
+                        }
+                    }
+                }
+            }
+
+            if (gameOver) {
+                gameOverMessage.style.display = 'block';
             }
         }
 
