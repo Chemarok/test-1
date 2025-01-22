@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale: 1.0">
     <title>2048 Game</title>
     <style>
         * {
@@ -35,6 +35,10 @@
             margin-bottom: 20px;
             color: #776e65;
             font-weight: bold;
+            padding: 10px;
+            background-color: #edc22e;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         }
 
         #grid-container {
@@ -45,7 +49,7 @@
             margin-bottom: 20px;
             width: 100%;
             aspect-ratio: 1;
-            transition: all 0.2s ease-in-out;
+            transition: all 0.5s ease-in-out;
         }
 
         .cell {
@@ -56,7 +60,7 @@
             font-size: 2rem;
             color: white;
             border-radius: 5px;
-            transition: background-color 0.2s, transform 0.2s;
+            transition: background-color 0.2s, transform 0.5s ease-in-out;
             width: 100%;
             height: 100%;
         }
@@ -70,10 +74,12 @@
             border: none;
             border-radius: 5px;
             margin-top: 10px;
+            transition: background-color 0.2s;
         }
 
         button:active {
             background-color: #45a049;
+            transform: scale(0.95);
         }
 
         @media (max-width: 500px) {
@@ -105,6 +111,23 @@
             display: none;
             margin-top: 20px;
         }
+
+        #controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        #controls button {
+            font-size: 1.5rem;
+            margin: 5px;
+            transition: transform 0.1s ease;
+        }
+
+        #controls button:active {
+            transform: scale(0.9);
+        }
+
     </style>
 </head>
 <body>
@@ -114,6 +137,12 @@
         <button id="reset-button">Reset Game</button>
         <div id="win-message">You Win!</div>
         <div id="game-over-message">Game Over!</div>
+        <div id="controls">
+            <button id="up">↑</button>
+            <button id="left">←</button>
+            <button id="right">→</button>
+            <button id="down">↓</button>
+        </div>
     </div>
 
     <script>
@@ -121,6 +150,10 @@
         const resetButton = document.getElementById('reset-button');
         const winMessage = document.getElementById('win-message');
         const gameOverMessage = document.getElementById('game-over-message');
+        const upButton = document.getElementById('up');
+        const downButton = document.getElementById('down');
+        const leftButton = document.getElementById('left');
+        const rightButton = document.getElementById('right');
 
         let board = [
             [0, 0, 0, 0],
@@ -128,6 +161,8 @@
             [0, 0, 0, 0],
             [0, 0, 0, 0]
         ];
+        
+        let isMoving = false; // Flag to prevent multiple moves in quick succession
 
         function initializeGame() {
             for (let row = 0; row < 4; row++) {
@@ -191,7 +226,6 @@
             }
         }
 
-        // Combine and slide logic for rows
         function slideAndMergeRow(row) {
             const newRow = row.filter(num => num !== 0); // Remove zeros
             for (let i = 0; i < newRow.length - 1; i++) {
@@ -209,6 +243,10 @@
         }
 
         function moveUp() {
+            if (isMoving) return;
+            isMoving = true;
+            setTimeout(() => { isMoving = false; }, 500); // Lock for 0.5 seconds
+            
             board = rotateBoard();
             for (let i = 0; i < 4; i++) {
                 board[i] = slideAndMergeRow(board[i]);
@@ -221,6 +259,10 @@
         }
 
         function moveDown() {
+            if (isMoving) return;
+            isMoving = true;
+            setTimeout(() => { isMoving = false; }, 500); // Lock for 0.5 seconds
+            
             board = rotateBoard();
             board.reverse();
             for (let i = 0; i < 4; i++) {
@@ -234,6 +276,10 @@
         }
 
         function moveLeft() {
+            if (isMoving) return;
+            isMoving = true;
+            setTimeout(() => { isMoving = false; }, 500); // Lock for 0.5 seconds
+
             for (let i = 0; i < 4; i++) {
                 board[i] = slideAndMergeRow(board[i]);
             }
@@ -244,6 +290,10 @@
         }
 
         function moveRight() {
+            if (isMoving) return;
+            isMoving = true;
+            setTimeout(() => { isMoving = false; }, 500); // Lock for 0.5 seconds
+
             for (let i = 0; i < 4; i++) {
                 board[i] = board[i].reverse();
                 board[i] = slideAndMergeRow(board[i]);
@@ -255,30 +305,11 @@
             checkGameOver();
         }
 
-        // Swipe detection
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        gridContainer.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-        });
-
-        gridContainer.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].screenX;
-            const touchEndY = e.changedTouches[0].screenY;
-
-            const diffX = touchEndX - touchStartX;
-            const diffY = touchEndY - touchStartY;
-
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (diffX > 0) moveRight();
-                else moveLeft();
-            } else {
-                if (diffY > 0) moveDown();
-                else moveUp();
-            }
-        });
+        // Button clicks
+        upButton.addEventListener('click', moveUp);
+        downButton.addEventListener('click', moveDown);
+        leftButton.addEventListener('click', moveLeft);
+        rightButton.addEventListener('click', moveRight);
 
         resetButton.addEventListener('click', initializeGame);
 
