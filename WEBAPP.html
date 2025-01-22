@@ -676,5 +676,10 @@ function cellReset() {
 document.body.innerHTML += `
   <div id="gameOver">Game Over! Try Again!</div>
 `;
+document.getElementById('repeat').addEventListener('click', function() {
+  // Сховати плашку "Game Over"
+  var gameOverMessage = document.getElementById('gameOver');
+  gameOverMessage.style.visibility = 'hidden'; // Приховуємо плашку
+});
   </script>
-</body>
+</body>s
