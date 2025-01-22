@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head >
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,400,800" rel="stylesheet">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height">
+    <title>2048 Game</title>
 <style type="text/css">
     body {
   background-color: #fff;
@@ -14,14 +17,14 @@
   justify-content: center;
   gap: 10px;
   position: absolute;
-  top: 650px;
+  top: 720px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 button.move {
   font-size: 30px;
-  padding: 10px 20px;
+  padding: 30px 40px;
   cursor: pointer;
   border-radius: 5px;
   border: none;
@@ -50,6 +53,43 @@ button.move:hover {
 
 div.game {
   box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+}
+
+.head {
+  height: 120px;
+  width: 510px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px; /* Зміщення вниз */
+}
+
+.info, .repeat {
+  margin-top: 10px; /* Відступ між кнопками */
+}
+
+#gameOver {
+  font-family: Nunito, sans-serif;
+  font-size: 30px;
+  color: white;
+  background-color: #7D3C34;
+  padding: 20px;
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s, visibility 0.5s;
+  z-index: 1001;
+}
+
+#gameOver.show {
+  visibility: visible;
+  opacity: 1;
 }
 
 div.description {
@@ -230,7 +270,7 @@ div > div > div > div {
 }
 
 .lose {
-  background-color: #7D3C34;
+  background-color: #fff;
 }
 </style>
 </head>
@@ -583,5 +623,58 @@ function reset() {
   cellReset();
   cellCreator(2, 0);
 }
+function gameOver() {
+  // Відображаємо повідомлення про програш з анімацією
+  var gameOverMessage = document.getElementById('gameOver');
+  gameOverMessage.classList.add('show');
+}
+
+// Функція для перевірки програшу
+function checkGameOver() {
+  var count = 0;
+  for (var x = 1; x < 5; x++) {
+    for (var y = 1; y < 5; y++) {
+      var cell = document.getElementById('' + x + y);
+      if (cell.innerHTML != '') {
+        count++;
+      }
+    }
+  }
+  // Якщо всі клітинки заповнені і неможливо зробити рух, то програш
+  if (count === 16) {
+    gameOver();
+  }
+}
+
+// Оновлений cellReset для перевірки програшу після кожного ходу
+function cellReset() {
+  var count = 0;
+  for (var x = 1; x < 5; x++) {
+    for (var y = 1; y < 5; y++) {
+      var resetter = document.getElementById('' + x + y);
+      if (resetter.innerHTML != '') {
+        count++;
+      }
+      if (resetter.innerHTML == '') {
+        resetter.className = 'grid_cell';
+      }
+      if (resetter.className == 'grid_cell active merged') {
+        resetter.className = 'grid_cell active';
+      }
+    }
+  }
+  if (count == 16) {
+    document.getElementById('status').className = 'lose';
+    gameOver(); // Викликаємо гру про програш
+  } else if (document.getElementsByClassName('grid').id == 'moved') {
+    cellCreator(1, 1);
+  }
+  document.getElementsByClassName('grid').id = ' ';
+}
+
+// Додамо новий блок для Game Over в HTML
+document.body.innerHTML += `
+  <div id="gameOver">Game Over! Try Again!</div>
+`;
   </script>
 </body>
