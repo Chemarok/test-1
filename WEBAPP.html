@@ -177,16 +177,88 @@
             }
         }
 
-        function moveUp() { /* Implement movement logic for "Up" */ }
-        function moveDown() { /* Implement movement logic for "Down" */ }
-        function moveLeft() { /* Implement movement logic for "Left" */ }
-        function moveRight() { /* Implement movement logic for "Right" */ }
+        // Move and merge logic for all directions
+        function slideAndMergeRow(row) {
+            const newRow = row.filter(num => num !== 0); // Remove zeros
+            for (let i = 0; i < newRow.length - 1; i++) {
+                if (newRow[i] === newRow[i + 1]) {
+                    newRow[i] *= 2;
+                    newRow[i + 1] = 0;
+                }
+            }
+            return newRow.filter(num => num !== 0).concat(new Array(4 - newRow.length).fill(0));
+        }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp') moveUp();
-            if (e.key === 'ArrowDown') moveDown();
-            if (e.key === 'ArrowLeft') moveLeft();
-            if (e.key === 'ArrowRight') moveRight();
+        function rotateBoard() {
+            return board[0].map((_, i) => board.map(row => row[i]));
+        }
+
+        function moveUp() {
+            board = rotateBoard();
+            for (let i = 0; i < 4; i++) {
+                board[i] = slideAndMergeRow(board[i]);
+            }
+            board = rotateBoard().reverse();
+            addRandomTile();
+            updateGrid();
+            checkWin();
+        }
+
+        function moveDown() {
+            board = rotateBoard();
+            board.reverse();
+            for (let i = 0; i < 4; i++) {
+                board[i] = slideAndMergeRow(board[i]);
+            }
+            board = rotateBoard().reverse();
+            addRandomTile();
+            updateGrid();
+            checkWin();
+        }
+
+        function moveLeft() {
+            for (let i = 0; i < 4; i++) {
+                board[i] = slideAndMergeRow(board[i]);
+            }
+            addRandomTile();
+            updateGrid();
+            checkWin();
+        }
+
+        function moveRight() {
+            for (let i = 0; i < 4; i++) {
+                board[i] = board[i].reverse();
+                board[i] = slideAndMergeRow(board[i]);
+                board[i] = board[i].reverse();
+            }
+            addRandomTile();
+            updateGrid();
+            checkWin();
+        }
+
+        // Swipe detection
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        gridContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        gridContainer.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const touchEndY = e.changedTouches[0].screenY;
+
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX > 0) moveRight();
+                else moveLeft();
+            } else {
+                if (diffY > 0) moveDown();
+                else moveUp();
+            }
         });
 
         resetButton.addEventListener('click', initializeGame);
