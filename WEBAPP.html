@@ -50,6 +50,7 @@ button.move:hover {
   align-items: center;
   justify-content: center;
   background-color: #F7CA7A;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 }
 
 div.game {
@@ -66,6 +67,7 @@ div.game {
   justify-content: center;
   margin-top: 20px; /* Зміщення вниз */
   background-color: #F7CA7A;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 }
 
 .info, .repeat {
@@ -139,6 +141,7 @@ div.description {
   transform: translate(-50%, -50%);
   margin-left: 25px;
   transition: 0.1s background-color;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
 }
 
 .info:hover {
@@ -154,7 +157,7 @@ div.description {
   font-family: Nunito;
   font-size: 7vh;
   font-weight: 200;
-  margin-right: 10px;
+  margin-right: 50px;
   color: white;
   background-color: FFD489;
   
@@ -162,14 +165,15 @@ div.description {
 
 .score {
   position: relative;
-  width: 100px;
+  width:15px;
   height: 100px;
   top: 40px;
   font-family: nunito;
   font-weight: 400;
-  font-size: 30px;
+  font-size: 20px;
   color: grey;
   text-align: center;
+  margin-right: 10vh;
 }
 
 
@@ -282,7 +286,7 @@ div > div > div > div {
 <body>
   <div class="game">
     <div class="head">
-      <div class="a">2048 <button class="info" onClick='info()'>i</button> <button id="repeat" class="info repeat" onClick='reset()'>↻</button></div>
+      <div class="a"><b>2048</b> <button class="info" onClick='info()'>i</button> <button id="repeat" class="info repeat" onClick='reset()'>↻</button></div>
       <div class="score">Score:<br/><span id="value"></span></div>
     </div>
     <div class="description" id="description">
