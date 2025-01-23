@@ -31,6 +31,7 @@ button.move {
   background-color: #F7CA7A;
   color: white;
   transition: background-color 0.3s;
+  box-shadow: 0px 0px 7px rgba(0,0,0,0.5);
 }
 
 button.move:hover {
@@ -137,15 +138,16 @@ div.description {
   background-color: #F0BB60;
   color: #fff;
   font-size: 20px;
-  top: 50px;
+  top: 1vh;
   transform: translate(-50%, -50%);
   margin-left: 25px;
   transition: 0.1s background-color;
   box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+  position: relative;
 }
 
 .info:hover {
-  background-color: #6593d8;
+  background-color: #E4B86E;
 }
 
 
@@ -174,6 +176,7 @@ div.description {
   color: grey;
   text-align: center;
   margin-right: 10vh;
+  color: white;
 }
 
 
@@ -196,6 +199,7 @@ div.description {
 
 .field {
   z-index: 50;
+  box-shadow: 0px 0px 7px rgba(0,0,0,0.5);
 }
 
 .grid {
@@ -287,7 +291,7 @@ div > div > div > div {
   <div class="game">
     <div class="head">
       <div class="a"><b>2048</b> <button class="info" onClick='info()'>i</button> <button id="repeat" class="info repeat" onClick='reset()'>↻</button></div>
-      <div class="score">Score:<br/><span id="value"></span></div>
+      <div class="score"><b>Score:</b><br/><span id="value"></span></div>
     </div>
     <div class="description" id="description">
     How to play:<br/><br/>
